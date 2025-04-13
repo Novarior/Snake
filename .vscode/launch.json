@@ -1,0 +1,51 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Запуск C++",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Bundle/Snake.app",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Включить pretty-printing для gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Включить pretty-printing для gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "ekz deb",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/snake.app",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "args": [],
+            "environment": [
+                {
+                    "name": "Test",
+                    "value": "Debug"
+                }
+            ],
+            "externalConsole": true,
+            "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
+            "MIMode": "lldb",
+        }
+    ]
+}
