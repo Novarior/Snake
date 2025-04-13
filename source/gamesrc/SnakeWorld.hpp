@@ -9,7 +9,7 @@
 
 class World : public sf::Drawable {
 private:
-  static const size_t FOOD_COUNT = 5; // Увеличиваем количество обычной еды
+  static const size_t FOOD_COUNT = 4; // Увеличиваем количество обычной еды
   static int callIndex; // Добавляем счетчик вызовов
 
   void draw(sf::RenderTarget &target, sf::RenderStates states) const override {
@@ -83,9 +83,6 @@ private:
     snake.moveSegment(0, newHeadPos);
 
     for (size_t i = 1; i < snake.getLength(); ++i) {
-      std::cout << "[" << ++callIndex << "] moveSnake: Moving segment " << i
-                << " to position: " << prevPositions[i - 1].x << ","
-                << prevPositions[i - 1].y << "\n";
       snake.moveSegment(i, prevPositions[i - 1]);
     }
   }
@@ -104,8 +101,8 @@ private:
                   << "] checkFoodCollision: Snake ate regular food at "
                   << snake.getPosition().x << "," << snake.getPosition().y
                   << "\n";
-        snake.grow();
-        snake.grow(); // Обычная еда дает +2 к длине
+
+        snake.grow(); // Обычная еда дает +1 к длине
         std::cout << "[" << ++callIndex
                   << "] checkFoodCollision: Snake length after regular food: "
                   << snake.getLength() << "\n";
@@ -141,9 +138,9 @@ private:
     }
   }
 
+  // Проверяем совпадение с обычной едой
   bool isPositionOccupiedByFood(const sf::Vector2f &pos,
                                 SnakeFood &_food) const {
-    // Проверяем совпадение с обычной едой
     for (const auto &food : mFoodArray) {
       if (food.getPosition() == pos && &food != &_food) {
         std::cout << "[" << ++callIndex
@@ -151,8 +148,10 @@ private:
         return true;
       }
     }
-    // Проверяем совпадение с движущейся едой
-    if (mMovingFood.getPosition() == pos) {
+    if (mMovingFood.getPosition() == pos && &_food != &mMovingFood) {
+      std::cout
+          << "[" << ++callIndex
+          << "] isPositionOccupiedByFood: Position occupied by moving food\n";
       return true;
     }
     return false;
@@ -267,7 +266,7 @@ private:
   BotSnake mBotSnake;
   std::vector<SnakeFood> mFoodArray;
   MovingFood mMovingFood;
-  const bool worldIsCycled = false;
+  const bool worldIsCycled = true;
 
 public:
   World()
@@ -311,19 +310,19 @@ public:
     mMovingFood.move();
 
     // Временно отключаем движение бота для отладки
-    // mBotSnake.makeDecision(mFoodArray, mMovingFood, mPlayerSnake);
+    mBotSnake.makeDecision(mFoodArray, mMovingFood, mPlayerSnake);
 
     // Двигаем змей
     moveSnake(mPlayerSnake);
-    // moveSnake(mBotSnake);  // Временно отключаем движение
+    moveSnake(mBotSnake); // Временно отключаем движение
 
     // Сначала проверяем столкновения со стенами и друг с другом
     checkCollisions(mPlayerSnake, mBotSnake);
-    // checkCollisions(mBotSnake, mPlayerSnake);  // Отключаем для отладки
+    checkCollisions(mBotSnake, mPlayerSnake); // Отключаем для отладки
 
     // Только после этого проверяем столкновения с едой
     checkFoodCollision(mPlayerSnake);
-    // checkFoodCollision(mBotSnake);  // Отключаем для отладки
+    checkFoodCollision(mBotSnake); // Отключаем для отладки
   }
 
   void setPlayerDirection(Direction newDir) {

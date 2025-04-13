@@ -20,12 +20,14 @@ private:
 
   void updateColors() {
     if (segments.empty()) {
-      std::cout << "[Snake:" << segments.size() << "] updateColors: Empty snake!\n";
+      std::cout << "[Snake:" << segments.size()
+                << "] updateColors: Empty snake!\n";
       return;
     }
 
-    std::cout << "[Snake:" << segments.size() << "] updateColors: Updating colors for " 
-              << segments.size() << " segments\n";
+    std::cout << "[Snake:" << segments.size()
+              << "] updateColors: Updating colors for " << segments.size()
+              << " segments\n";
 
     // Задаем цвет головы
     segments[0].setFillColor(baseColor);
@@ -72,7 +74,8 @@ public:
 
   void grow() {
     if (segments.empty()) {
-      std::cout << "[Snake:" << segments.size() << "] grow: Cannot grow empty snake!\n";
+      std::cout << "[Snake:" << segments.size()
+                << "] grow: Cannot grow empty snake!\n";
       return;
     }
 
@@ -84,7 +87,7 @@ public:
 
     // Позиционируем новый сегмент за последним существующим сегментом
     sf::Vector2f lastPos = segments.back().getPosition();
-    std::cout << "[Snake:" << segments.size() << "] grow: Adding segment at " 
+    std::cout << "[Snake:" << segments.size() << "] grow: Adding segment at "
               << lastPos.x << "," << lastPos.y << "\n";
 
     newSegment.setPosition(lastPos);
@@ -97,7 +100,7 @@ public:
 
     // Обновляем цвета всех сегментов
     updateColors();
-    std::cout << "[Snake:" << segments.size() << "] grow: New length is " 
+    std::cout << "[Snake:" << segments.size() << "] grow: New length is "
               << segments.size() << "\n";
   }
 

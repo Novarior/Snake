@@ -13,7 +13,7 @@ const float cell_size = 10; // Размер одной клетки в пикс�
 const char font[] = "fonts/Muli-Regular.ttf";
 
 // Интервал между тиками в секундах (8 тиков в секунду вместо 20)
-constexpr float tick_interval = 1.0f / 8.0f;
+constexpr float tick_interval = 1.0f / 20.0f;
 
 }; // namespace myConst
 enum class Direction { IDLE, UP, DOWN, LEFT, RIGHT };
